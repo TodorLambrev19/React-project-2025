@@ -1,8 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";            // Добавихме това
-import { getFirestore } from "firebase/firestore";  // Добавихме това
+import { getAuth } from "firebase/auth";            
+import { getFirestore } from "firebase/firestore";  
 
-// Твоята конфигурация (вече е попълнена правилно)
 const firebaseConfig = {
   apiKey: "AIzaSyDYWMaEm2otvHfU62twIEiA6y1iAMsZZjQ",
   authDomain: "react-project-2025-59ae4.firebaseapp.com",
@@ -13,9 +12,7 @@ const firebaseConfig = {
   measurementId: "G-N4GCK2BS6L"
 };
 
-// Инициализиране на Firebase
 const app = initializeApp(firebaseConfig);
 
-// ВАЖНО: Експортване на услугите, за да ги ползваме в AuthContext
 export const auth = getAuth(app);
 export const db = getFirestore(app);

@@ -4,17 +4,13 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
-// 1. Създаваме отделен компонент за Навигацията, който СЛУША за промени
 const Navigation = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Тази функция ще ни помогне да видим в конзолата дали има потребител
-  console.log("Current User in Navigation:", user); 
-
   const handleLogout = async () => {
       await logout();
-      navigate('/'); // Връщаме се в началото след изход
+      navigate('/'); 
   };
 
   return (
@@ -23,7 +19,7 @@ const Navigation = () => {
       <div style={styles.links}>
         <Link to="/" style={styles.link}>Home</Link>
         
-        {/* Тук е магията: Ако има User, покажи Logout. Ако няма - Login/Register */}
+        {}
         {user ? (
           <>
              <span style={{color: '#999', marginRight: '10px'}}>Hello, {user.email}</span>
@@ -42,7 +38,6 @@ const Navigation = () => {
 
 function App() {
   return (
-    // 2. AuthProvider трябва да обгръща ВСИЧКО, за да може Navigation да работи
     <AuthProvider>
       <Navigation />
       
@@ -57,7 +52,6 @@ function App() {
   );
 }
 
-// Малко бързи стилове, за да изглежда подредено
 const styles = {
   nav: {
     display: 'flex',
