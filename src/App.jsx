@@ -3,6 +3,9 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Create from './pages/Create'; 
+import Details from './pages/Details';
+import Edit from './pages/Edit';
 
 const Navigation = () => {
   const { user, logout } = useAuth();
@@ -19,10 +22,12 @@ const Navigation = () => {
       <div style={styles.links}>
         <Link to="/" style={styles.link}>Home</Link>
         
-        {}
         {user ? (
           <>
-             <span style={{color: '#999', marginRight: '10px'}}>Hello, {user.email}</span>
+             {}
+             <Link to="/create" style={styles.link}>CREATE</Link>
+             
+             <span style={{color: '#999', margin: '0 10px'}}>| {user.email}</span>
              <button onClick={handleLogout} style={styles.logoutBtn}>LOGOUT</button>
           </>
         ) : (
@@ -42,15 +47,20 @@ function App() {
       <Navigation />
       
       <main style={{ padding: '2rem' }}>
+        {}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/details/:id" element={<Details />} />
+          <Route path="/edit/:id" element={<Edit />} />     
+          <Route path="/create" element={<Create />} /> 
         </Routes>
       </main>
     </AuthProvider>
   );
 }
+
 
 const styles = {
   nav: {
@@ -58,8 +68,11 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '1rem 2rem',
-    backgroundColor: '#1a1a1a',
-    borderBottom: '1px solid #333'
+    backgroundColor: '#1e1e1e', 
+    borderBottom: '1px solid #333',
+    position: 'sticky',
+    top: 0,
+    zIndex: 100
   },
   logo: {
     color: '#e63946',
@@ -75,7 +88,8 @@ const styles = {
   link: {
     color: 'white',
     textDecoration: 'none',
-    fontWeight: '500'
+    fontWeight: '500',
+    textTransform: 'uppercase'
   },
   logoutBtn: {
     backgroundColor: '#e63946',

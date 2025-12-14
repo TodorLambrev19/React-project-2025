@@ -1,29 +1,54 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const { login } = useAuth();
-    const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await login(email, password);
-            navigate('/');
-        } catch (error) {
-            alert(error.message);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      navigate('/');
+    } catch (error) {
+      alert("Failed to log in: " + error.message);
+    }
+  };
 
-    return (
+  return (
+    <div className="auth-wrapper">
+      <div className="auth-card">
+        <h2>Sign In</h2>
+        
         <form onSubmit={handleSubmit}>
-            <h2>Login</h2>
-            <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email"/>
-            <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
-            <button type="submit">Login</button>
+          <input 
+            type="email" 
+            placeholder="Email Address" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          
+          <input 
+            type="password" 
+            placeholder="Password" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          
+          <button type="submit" className="auth-btn">
+            Login
+          </button>
         </form>
-    );
+
+        <Link to="/register" className="auth-link">
+          Don't have an account? <span>Register</span>
+        </Link>
+      </div>
+    </div>
+  );
 }
