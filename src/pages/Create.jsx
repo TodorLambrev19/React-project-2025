@@ -1,121 +1,125 @@
 import { useState } from 'react';
-import { createProduct } from '../api/products';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { stockPhotos } from '../utils/stockPhotos'; 
+import { useNavigate } from 'react-router-dom'; 
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useAuth } from '../contexts/AuthContext'; 
 
 export default function Create() {
     const navigate = useNavigate();
-    const { user } = useAuth(); 
-
+    const { user } = useAuth();
     
     const [formData, setFormData] = useState({
         title: '',
         category: '',
-        imageUrl: stockPhotos[0].url, 
+        imageUrl: '',
         price: '',
         description: ''
     });
 
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
-
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        if(!user) {
-            alert("You must be logged in!");
-            return;
-        }
+        e.preventDefault(); 
+        setError('');
+        setLoading(true);
 
         try {
-            await createProduct({
-                ...formData,
+            if (!formData.title || !formData.price || !formData.imageUrl) {
+                return setError('Моля попълнете задължителните полета!');
+            }
+            await addDoc(collection(db, "products"), {
+                title: formData.title,
+                category: formData.category,
+                imageUrl: formData.imageUrl,
                 price: Number(formData.price), 
-                ownerId: user.uid 
+                description: formData.description,
+                ownerId: user ? user.uid : 'anonymous', 
+                createdAt: new Date()
             });
+
             
-            navigate('/');
-        } catch (error) {
-            console.error(error);
-            alert('Error creating product');
+            alert('Продуктът е добавен успешно!'); 
+            navigate('/'); 
+
+        } catch (err) {
+            console.error(err);
+            setError('Грешка при записване: ' + err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="form-container">
-            <h2>Add New Item</h2>
+            <h2 style={{color: 'white', marginBottom: '2rem', textTransform: 'uppercase'}}>
+                ADD NEW DROP
+            </h2>
+
+            {error && <div style={{color: 'red', marginBottom: '1rem'}}>{error}</div>}
+
             <form onSubmit={handleSubmit}>
-                <label>Title</label>
-                <input 
-                    type="text" 
-                    name="title" 
-                    placeholder="e.g. Black Hoodie" 
-                    onChange={handleChange} 
-                    required 
-                />
-                
-                <label>Category</label>
-                <input 
-                    type="text" 
-                    name="category" 
-                    placeholder="e.g. Hoodies" 
-                    onChange={handleChange} 
-                    required 
-                />
-                
-                {}
-                <label>Select Official Photo</label>
-                <select 
-                    name="imageUrl" 
-                    value={formData.imageUrl} 
-                    onChange={handleChange}
-                    style={{
-                        width: '100%',
-                        padding: '10px',
-                        marginBottom: '15px',
-                        backgroundColor: '#2a2a2a',
-                        color: 'white',
-                        border: '1px solid #444',
-                        borderRadius: '4px'
-                    }}
-                >
-                    {stockPhotos.map((photo, index) => (
-                        <option key={index} value={photo.url}>
-                            {photo.name}
-                        </option>
-                    ))}
-                </select>
+                <div className="form-group">
+                    <input 
+                        type="text" 
+                        name="title" 
+                        placeholder="Product Name (e.g. Black Hoodie)"
+                        value={formData.title}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
 
-                {}
-                {formData.imageUrl && (
-                    <div style={{marginBottom: '15px', textAlign: 'center'}}>
-                         <img src={formData.imageUrl} alt="Preview" style={{maxHeight: '150px', borderRadius: '8px'}} />
-                    </div>
-                )}
-                
-                <label>Price ($)</label>
-                <input 
-                    type="number" 
-                    name="price" 
-                    placeholder="59" 
-                    onChange={handleChange} 
-                    required 
-                />
-                
-                <label>Description</label>
-                <textarea 
-                    name="description" 
-                    placeholder="Product Description..." 
-                    onChange={handleChange}
-                    rows="4"
-                />
+                <div className="form-group">
+                    <input 
+                        type="text" 
+                        name="category" 
+                        placeholder="Category (e.g. Hoodies, Pants)"
+                        value={formData.category}
+                        onChange={handleChange}
+                    />
+                </div>
 
-                <button type="submit">Create Listing</button>
+                <div className="form-group">
+                    <input 
+                        type="text" 
+                        name="imageUrl" 
+                        placeholder="Image URL (e.g. /images/feat-1.jpg)"
+                        value={formData.imageUrl}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+
+                <div className="form-group">
+                    <input 
+                        type="number" 
+                        name="price" 
+                        placeholder="Price ($)"
+                        value={formData.price}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+
+                <div className="form-group">
+                    <textarea 
+                        name="description" 
+                        placeholder="Description (Optional)"
+                        value={formData.description}
+                        onChange={handleChange}
+                        rows="4"
+                    ></textarea>
+                </div>
+
+                <button type="submit" className="submit-btn" disabled={loading}>
+                    {loading ? 'ADDING...' : 'ADD PRODUCT'}
+                </button>
             </form>
         </div>
     );

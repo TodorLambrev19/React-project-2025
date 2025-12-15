@@ -64,7 +64,7 @@ export default function Details() {
 
                 {isOwner && (
                     <div style={{display: 'flex', gap: '10px', marginTop: '20px'}}>
-                        {/* БУТОН EDIT */}
+                        {}
                         <Link 
                             to={`/edit/${id}`} 
                             style={{
@@ -79,7 +79,7 @@ export default function Details() {
                             EDIT
                         </Link>
 
-                        {/* БУТОН DELETE */}
+                        {}
                         <button 
                             onClick={handleDelete} 
                             style={{backgroundColor: '#e63946'}}

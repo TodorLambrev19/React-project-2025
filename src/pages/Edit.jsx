@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getProductById, updateProduct } from '../api/products';
-import { useAuth } from '../contexts/AuthContext';
-import { stockPhotos } from '../utils/stockPhotos'; 
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function Edit() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { user } = useAuth();
-    
-    const [loading, setLoading] = useState(true);
+
     const [formData, setFormData] = useState({
         title: '',
         category: '',
@@ -18,24 +15,31 @@ export default function Edit() {
         description: ''
     });
 
+    const [loading, setLoading] = useState(true);
+    const [updating, setUpdating] = useState(false);
+
+    // Изтегляне на данните
     useEffect(() => {
-        async function fetchData() {
+        const fetchProduct = async () => {
             try {
-                const product = await getProductById(id);
-                if (user && product.ownerId !== user.uid) {
-                    alert("You are not the owner!");
+                const docRef = doc(db, "products", id);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    setFormData(docSnap.data());
+                } else {
+                    alert("Продуктът не съществува!");
                     navigate('/');
-                    return;
                 }
-                setFormData(product);
-                setLoading(false);
             } catch (error) {
-                console.error(error);
-                navigate('/');
+                console.error("Error fetching product:", error);
+            } finally {
+                setLoading(false);
             }
-        }
-        fetchData();
-    }, [id, user, navigate]);
+        };
+
+        fetchProduct();
+    }, [id, navigate]);
 
     const handleChange = (e) => {
         setFormData({
@@ -46,91 +50,112 @@ export default function Edit() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setUpdating(true);
+
         try {
-            await updateProduct(id, {
-                ...formData,
-                price: Number(formData.price)
+            const docRef = doc(db, "products", id);
+            await updateDoc(docRef, {
+                title: formData.title,
+                category: formData.category,
+                imageUrl: formData.imageUrl,
+                price: Number(formData.price),
+                description: formData.description
             });
-            navigate(`/details/${id}`);
-        } catch (error) {
-            console.error(error);
-            alert("Error updating product");
+            navigate(`/details/${id}`); 
+        } catch (err) {
+            console.error(err);
+            alert('Грешка при обновяване: ' + err.message);
+        } finally {
+            setUpdating(false);
         }
     };
 
-    if (loading) return <div style={{textAlign: 'center', marginTop: '50px'}}>Loading data...</div>;
+    if (loading) return <div style={{textAlign: 'center', color: 'white', marginTop: '50px'}}>Loading data...</div>;
 
     return (
         <div className="form-container">
-            <h2>Edit Item</h2>
+            <h2 style={{color: 'white', marginBottom: '2rem', textTransform: 'uppercase'}}>
+                EDIT DROP
+            </h2>
+
             <form onSubmit={handleSubmit}>
-                <label>Title</label>
-                <input 
-                    type="text" 
-                    name="title" 
-                    value={formData.title} 
-                    onChange={handleChange} 
-                    required 
-                />
-                
-                <label>Category</label>
-                <input 
-                    type="text" 
-                    name="category" 
-                    value={formData.category} 
-                    onChange={handleChange} 
-                    required 
-                />
-                
                 {}
-                <label>Select Official Photo</label>
-                <select 
-                    name="imageUrl" 
-                    value={formData.imageUrl} 
-                    onChange={handleChange}
-                    style={{
-                        width: '100%',
-                        padding: '10px',
-                        marginBottom: '15px',
-                        backgroundColor: '#2a2a2a',
-                        color: 'white',
-                        border: '1px solid #444',
-                        borderRadius: '4px'
-                    }}
-                >
-                    {/* Добавяме опция "Запази текущата", ако тя не е в списъка */}
-                    {!stockPhotos.some(p => p.url === formData.imageUrl) && (
-                        <option value={formData.imageUrl}>Keep Current Image</option>
-                    )}
-                    {stockPhotos.map((photo, index) => (
-                        <option key={index} value={photo.url}>
-                            {photo.name}
-                        </option>
-                    ))}
-                </select>
-
-                 <div style={{marginBottom: '15px', textAlign: 'center'}}>
-                        <img src={formData.imageUrl} alt="Preview" style={{maxHeight: '150px', borderRadius: '8px'}} />
+                <div className="form-group">
+                    <input 
+                        type="text" 
+                        name="title" 
+                        placeholder="Product Name"
+                        value={formData.title}
+                        onChange={handleChange}
+                        required 
+                    />
                 </div>
-                
-                <label>Price</label>
-                <input 
-                    type="number" 
-                    name="price" 
-                    value={formData.price} 
-                    onChange={handleChange} 
-                    required 
-                />
-                
-                <label>Description</label>
-                <textarea 
-                    name="description" 
-                    value={formData.description} 
-                    onChange={handleChange}
-                    rows="4"
-                />
 
-                <button type="submit">Save Changes</button>
+                {}
+                <div className="form-group">
+                    <input 
+                        type="text" 
+                        name="category" 
+                        placeholder="Category"
+                        value={formData.category}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                {}
+                <div className="form-group">
+                    <input 
+                        type="text" 
+                        name="imageUrl" 
+                        placeholder="Image URL"
+                        value={formData.imageUrl}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+
+                {}
+                <div style={{textAlign: 'center', marginBottom: '1.5rem', minHeight: '20px'}}>
+                    {formData.imageUrl ? (
+                        <img 
+                            src={formData.imageUrl} 
+                            alt="Preview" 
+                            style={{
+                                maxWidth: '150px', 
+                                borderRadius: '4px', 
+                                border: '1px solid #333'
+                            }}
+                            onError={(e) => {e.target.style.display='none'}}
+                        />
+                    ) : null}
+                </div>
+
+                {}
+                <div className="form-group">
+                    <input 
+                        type="number" 
+                        name="price" 
+                        placeholder="Price ($)"
+                        value={formData.price}
+                        onChange={handleChange}
+                        required 
+                    />
+                </div>
+
+                {}
+                <div className="form-group">
+                    <textarea 
+                        name="description" 
+                        placeholder="Description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        rows="3"
+                    ></textarea>
+                </div>
+
+                <button type="submit" className="submit-btn" disabled={updating}>
+                    {updating ? 'SAVING...' : 'SAVE CHANGES'}
+                </button>
             </form>
         </div>
     );
