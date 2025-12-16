@@ -17,8 +17,6 @@ export default function Edit() {
 
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
-
-    // Изтегляне на данните
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -77,9 +75,7 @@ export default function Edit() {
             <h2 style={{color: 'white', marginBottom: '2rem', textTransform: 'uppercase'}}>
                 EDIT DROP
             </h2>
-
             <form onSubmit={handleSubmit}>
-                {}
                 <div className="form-group">
                     <input 
                         type="text" 
@@ -90,8 +86,6 @@ export default function Edit() {
                         required 
                     />
                 </div>
-
-                {}
                 <div className="form-group">
                     <input 
                         type="text" 
@@ -101,8 +95,6 @@ export default function Edit() {
                         onChange={handleChange}
                     />
                 </div>
-
-                {}
                 <div className="form-group">
                     <input 
                         type="text" 
@@ -113,8 +105,6 @@ export default function Edit() {
                         required 
                     />
                 </div>
-
-                {}
                 <div style={{textAlign: 'center', marginBottom: '1.5rem', minHeight: '20px'}}>
                     {formData.imageUrl ? (
                         <img 
@@ -129,8 +119,6 @@ export default function Edit() {
                         />
                     ) : null}
                 </div>
-
-                {}
                 <div className="form-group">
                     <input 
                         type="number" 
@@ -141,8 +129,6 @@ export default function Edit() {
                         required 
                     />
                 </div>
-
-                {}
                 <div className="form-group">
                     <textarea 
                         name="description" 
@@ -152,7 +138,6 @@ export default function Edit() {
                         rows="3"
                     ></textarea>
                 </div>
-
                 <button type="submit" className="submit-btn" disabled={updating}>
                     {updating ? 'SAVING...' : 'SAVE CHANGES'}
                 </button>

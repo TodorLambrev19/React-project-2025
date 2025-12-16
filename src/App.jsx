@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Create from './pages/Create';
 import Details from './pages/Details';
 import Edit from './pages/Edit';
+import About from './pages/About';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/create" element={<Create />} />
             <Route path="/details/:id" element={<Details />} />
             <Route path="/edit/:id" element={<Edit />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
 

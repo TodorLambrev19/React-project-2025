@@ -4,12 +4,9 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-content">
-        
-        {}
         <div className="footer-section footer-left">
           <div className="footer-logo">
             <Link to="/">
-                {}
                 <img 
                     src="/images/skull.png" 
                     alt="Vrag Skull" 
@@ -28,7 +25,7 @@ export default function Footer() {
             <p>Адрес: София, бул. Цариградско Шосе</p>
             <p>Делнични дни: 10:00 - 20:00 ч.</p>
             <p>Събота: 11:00 - 18:00 ч.</p>
-            <p>Телефон: +359 888 123 456</p>
+            <p>Телефон: +359 88 471 3115</p>
           </address>
           
           <div className="footer-socials">
@@ -37,8 +34,6 @@ export default function Footer() {
             <a href="#" target="_blank" rel="noopener noreferrer">TW</a>
           </div>
         </div>
-
-        {}
         <div className="footer-section">
           <h3 className="footer-heading">ПОЛЕЗНО</h3>
           <ul className="footer-links">
@@ -48,8 +43,6 @@ export default function Footer() {
             <li><Link to="/">Контакти</Link></li>
           </ul>
         </div>
-
-        {}
         <div className="footer-section">
           <h3 className="footer-heading">ПРОДУКТИ</h3>
           <ul className="footer-links">
@@ -58,10 +51,7 @@ export default function Footer() {
             <li><Link to="/">Sale</Link></li>
           </ul>
         </div>
-
       </div>
-      
-      {}
       <div className="footer-bottom">
         <p>&copy; {new Date().getFullYear()} Vrag Clothing. All rights reserved.</p>
       </div>
