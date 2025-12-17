@@ -14,8 +14,8 @@ function App() {
   return (
     <AuthProvider>
       <div className="app-container">
-        
-        <Header /> {}
+
+        <Header /> 
 
         <main className="main-content">
           <Routes>
@@ -29,8 +29,8 @@ function App() {
           </Routes>
         </main>
 
-        <Footer /> {}
-      
+        <Footer /> 
+
       </div>
     </AuthProvider>
   );

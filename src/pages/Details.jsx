@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom'; 
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getProductById, deleteProduct } from '../api/products';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -72,44 +72,44 @@ export default function Details() {
         }
     };
 
-    if (loading) return <div style={{textAlign: 'center', marginTop: '50px', color: 'white'}}>Loading details...</div>;
-    if (!product) return <div style={{textAlign: 'center', color: 'white'}}>Product not found!</div>;
+    if (loading) return <div style={{ textAlign: 'center', marginTop: '50px', color: 'white' }}>Loading details...</div>;
+    if (!product) return <div style={{ textAlign: 'center', color: 'white' }}>Product not found!</div>;
 
     const isOwner = user && user.uid === product.ownerId;
 
     return (
-        <div className="form-container" style={{maxWidth: '1000px', textAlign: 'left', display: 'flex', gap: '4rem', margin: '4rem auto', alignItems: 'stretch'}}>
-            <div style={{flex: 1}}>
-                <img 
-                    src={product.imageUrl} 
-                    alt={product.title} 
-                    style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', border: '1px solid #333'}} 
+        <div className="form-container" style={{ maxWidth: '1000px', textAlign: 'left', display: 'flex', gap: '4rem', margin: '4rem auto', alignItems: 'stretch' }}>
+            <div style={{ flex: 1 }}>
+                <img
+                    src={product.imageUrl}
+                    alt={product.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', border: '1px solid #333' }}
                 />
             </div>
-            
-            <div style={{flex: 1, display: 'flex', flexDirection: 'column'}}>
-                <h1 style={{marginBottom: '10px', textTransform: 'uppercase'}}>{product.title}</h1>
-                <span style={{color: '#e63946', fontSize: '1.5rem', fontWeight: 'bold'}}>${product.price}</span>
-                <span style={{color: '#888', marginBottom: '20px'}}>Category: {product.category}</span>
-                
-                <p style={{lineHeight: '1.7', color: '#ccc'}}>
+
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <h1 style={{ marginBottom: '10px', textTransform: 'uppercase' }}>{product.title}</h1>
+                <span style={{ color: '#e63946', fontSize: '1.5rem', fontWeight: 'bold' }}>${product.price}</span>
+                <span style={{ color: '#888', marginBottom: '20px' }}>Category: {product.category}</span>
+
+                <p style={{ lineHeight: '1.7', color: '#ccc' }}>
                     {product.description}
                 </p>
 
                 {isOwner && (
                     <div style={{
-                        display: 'flex', 
-                        gap: '10px', 
-                        marginTop: 'auto', 
+                        display: 'flex',
+                        gap: '10px',
+                        marginTop: 'auto',
                         paddingTop: '20px'
                     }}>
-                        <Link 
-                            to={`/edit/${id}`} 
+                        <Link
+                            to={`/edit/${id}`}
                             style={{
-                                backgroundColor: '#444', 
-                                color: 'white', 
-                                padding: '10px 15px', 
-                                textDecoration: 'none', 
+                                backgroundColor: '#444',
+                                color: 'white',
+                                padding: '10px 15px',
+                                textDecoration: 'none',
                                 fontWeight: 'bold',
                                 borderRadius: '4px'
                             }}
@@ -117,8 +117,8 @@ export default function Details() {
                             EDIT
                         </Link>
 
-                        <button 
-                            onClick={handleDelete} 
+                        <button
+                            onClick={handleDelete}
                             style={{
                                 backgroundColor: '#e63946',
                                 color: 'white',

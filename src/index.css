@@ -147,6 +147,7 @@ button:hover {
   padding: 2rem 0;
   width: 100%;
 }
+
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -171,14 +172,14 @@ button:hover {
 
 .image-container {
   width: 100%;
-  height: 350px; 
+  height: 350px;
   overflow: hidden;
 }
 
 .image-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   transition: transform 0.5s;
 }
 
@@ -232,6 +233,7 @@ button:hover {
   background: #fff;
   color: black !important;
 }
+
 .site-footer {
   background-color: transparent;
   padding: 4rem 0 2rem;
@@ -266,7 +268,7 @@ button:hover {
   max-width: 200px;
   height: auto;
   display: block;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.1rem;
   opacity: 0.8;
   transition: opacity 0.3s;
 }
@@ -287,7 +289,7 @@ button:hover {
 .footer-address p,
 .footer-links a {
   color: #888;
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.8;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -337,6 +339,7 @@ button:hover {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
 .hero-wrapper {
   width: 100vw;
   position: relative;
@@ -345,7 +348,7 @@ button:hover {
   margin-left: -50vw;
   margin-right: -50vw;
   height: 550px;
-  margin-top: -2rem; 
+  margin-top: -2rem;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -476,24 +479,24 @@ button:hover {
 }
 
 .static-section {
-  display: grid; 
-  grid-template-columns: repeat(4, 1fr); 
-  gap: 20px; 
-  width: 100vw; 
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100vw;
   position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
   box-sizing: border-box;
-  padding: 0 40px; 
+  padding: 0 40px;
   margin-top: 2rem;
   margin-bottom: 5rem;
 }
 
 .static-card {
   width: 100%;
-  height: 450px; 
+  height: 450px;
   position: relative;
   overflow: hidden;
   border: 1px solid #1a1a1a;
@@ -502,7 +505,7 @@ button:hover {
 }
 
 .static-card:hover {
-    border-color: #333;
+  border-color: #333;
 }
 
 .static-image {
@@ -513,22 +516,22 @@ button:hover {
 }
 
 .static-card:hover .static-image {
-  transform: scale(1.1); 
+  transform: scale(1.1);
 }
 
 .static-card .overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; 
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
-    z-index: 1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+  z-index: 1;
 }
 
 .static-content {
   position: absolute;
-  bottom: 30px; 
+  bottom: 30px;
   left: 0;
   width: 100%;
   padding: 0 15px;
@@ -538,26 +541,27 @@ button:hover {
 }
 
 .static-card:hover .static-content {
-    transform: translateY(-10px);
+  transform: translateY(-10px);
 }
 
 .static-content h3 {
   color: white;
-  font-size: 1.6rem; 
+  font-size: 1.6rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-bottom: 8px;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.9);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
 }
 
 .static-price {
-    color: #e63946;
-    font-size: 1.1rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 5px rgba(0,0,0,1);
+  color: #e63946;
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 1);
 }
-  .static-card {
-      height: 550px;
-  }
+
+.static-card {
+  height: 550px;
+}

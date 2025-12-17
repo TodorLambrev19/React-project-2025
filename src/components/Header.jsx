@@ -23,23 +23,23 @@ export default function Header() {
             padding: '0 5%',
             width: '100%',
             background: '#000000',
-            position: 'relative',     
-            borderBottom: '1px solid #222', 
+            position: 'relative',
+            borderBottom: '1px solid #222',
             zIndex: 100,
             boxSizing: 'border-box',
             height: '90px',
             marginBottom: '0px'
         }}>
             <div className="logo" style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                <Link to="/" style={{display: 'flex', alignItems: 'center'}}>
-                    <img 
-                        src="/images/logo-white.png" 
-                        alt="VRAG Logo" 
-                        style={{ 
+                <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+                    <img
+                        src="/images/logo-white.png"
+                        alt="VRAG Logo"
+                        style={{
                             height: '220px',
                             width: 'auto',
                             objectFit: 'contain'
-                        }} 
+                        }}
                     />
                 </Link>
             </div>
@@ -78,7 +78,7 @@ export default function Header() {
                         <Link to="/register" style={{
                             ...navLinkStyle,
                             backgroundColor: '#e63946',
-                            padding: '10px 24px', 
+                            padding: '10px 24px',
                             borderRadius: '2px',
                             fontSize: '0.9rem'
                         }}>

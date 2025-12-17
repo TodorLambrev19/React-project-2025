@@ -67,11 +67,11 @@ export default function Home() {
                 </Link>
 
             </div>
-            <div className="container" style={{maxWidth: '1200px', margin: '0 auto', padding: '4rem 2rem'}}>
+            <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 2rem' }}>
                 <h2 className="section-title">ADDED PRODUCTS</h2>
 
                 {loading ? (
-                    <p style={{textAlign: 'center', color: '#888'}}>Loading collection...</p>
+                    <p style={{ textAlign: 'center', color: '#888' }}>Loading collection...</p>
                 ) : products.length > 0 ? (
                     <div className="products-grid">
                         {products.map(product => (
@@ -90,13 +90,13 @@ export default function Home() {
                         ))}
                     </div>
                 ) : (
-                    <div style={{textAlign: 'center', padding: '3rem'}}>
-                        <p style={{color: '#666', marginBottom: '20px', fontSize: '1.1rem'}}>
+                    <div style={{ textAlign: 'center', padding: '3rem' }}>
+                        <p style={{ color: '#666', marginBottom: '20px', fontSize: '1.1rem' }}>
                             No products added yet.
                         </p>
-                        
-                        <Link 
-                            to={user ? "/create" : "/login"} 
+
+                        <Link
+                            to={user ? "/create" : "/login"}
                             onClick={() => window.scrollTo(0, 0)}
                             style={{
                                 display: 'inline-block',

@@ -59,7 +59,7 @@ export default function Edit() {
                 price: Number(formData.price),
                 description: formData.description
             });
-            navigate(`/details/${id}`); 
+            navigate(`/details/${id}`);
         } catch (err) {
             console.error(err);
             alert('Грешка при обновяване: ' + err.message);
@@ -68,70 +68,70 @@ export default function Edit() {
         }
     };
 
-    if (loading) return <div style={{textAlign: 'center', color: 'white', marginTop: '50px'}}>Loading data...</div>;
+    if (loading) return <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>Loading data...</div>;
 
     return (
         <div className="form-container">
-            <h2 style={{color: 'white', marginBottom: '2rem', textTransform: 'uppercase'}}>
+            <h2 style={{ color: 'white', marginBottom: '2rem', textTransform: 'uppercase' }}>
                 EDIT DROP
             </h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <input 
-                        type="text" 
-                        name="title" 
+                    <input
+                        type="text"
+                        name="title"
                         placeholder="Product Name"
                         value={formData.title}
                         onChange={handleChange}
-                        required 
+                        required
                     />
                 </div>
                 <div className="form-group">
-                    <input 
-                        type="text" 
-                        name="category" 
+                    <input
+                        type="text"
+                        name="category"
                         placeholder="Category"
                         value={formData.category}
                         onChange={handleChange}
                     />
                 </div>
                 <div className="form-group">
-                    <input 
-                        type="text" 
-                        name="imageUrl" 
+                    <input
+                        type="text"
+                        name="imageUrl"
                         placeholder="Image URL"
                         value={formData.imageUrl}
                         onChange={handleChange}
-                        required 
+                        required
                     />
                 </div>
-                <div style={{textAlign: 'center', marginBottom: '1.5rem', minHeight: '20px'}}>
+                <div style={{ textAlign: 'center', marginBottom: '1.5rem', minHeight: '20px' }}>
                     {formData.imageUrl ? (
-                        <img 
-                            src={formData.imageUrl} 
-                            alt="Preview" 
+                        <img
+                            src={formData.imageUrl}
+                            alt="Preview"
                             style={{
-                                maxWidth: '150px', 
-                                borderRadius: '4px', 
+                                maxWidth: '150px',
+                                borderRadius: '4px',
                                 border: '1px solid #333'
                             }}
-                            onError={(e) => {e.target.style.display='none'}}
+                            onError={(e) => { e.target.style.display = 'none' }}
                         />
                     ) : null}
                 </div>
                 <div className="form-group">
-                    <input 
-                        type="number" 
-                        name="price" 
+                    <input
+                        type="number"
+                        name="price"
                         placeholder="Price ($)"
                         value={formData.price}
                         onChange={handleChange}
-                        required 
+                        required
                     />
                 </div>
                 <div className="form-group">
-                    <textarea 
-                        name="description" 
+                    <textarea
+                        name="description"
                         placeholder="Description"
                         value={formData.description}
                         onChange={handleChange}

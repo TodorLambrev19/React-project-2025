@@ -7,18 +7,19 @@ export default function Footer() {
         <div className="footer-section footer-left">
           <div className="footer-logo">
             <Link to="/">
-                <img 
-                    src="/images/skull.png" 
-                    alt="Vrag Skull" 
-                    className="footer-logo-img"
-                    style={{
-                        maxWidth: '250px', 
-                        height: 'auto',
-                        marginBottom: '1.5rem',
-                        display: 'block',
-                        opacity: '0.8'
-                    }}
-                />
+              <img
+                src="/images/skull.png"
+                alt="Vrag Skull"
+                className="footer-logo-img"
+                style={{
+                  maxWidth: '270px',
+                  height: 'auto',
+                  marginBottom: '0.1rem',
+                  display: 'block',
+                  opacity: '0.5',
+                  marginTop: 'auto'
+                }}
+              />
             </Link>
           </div>
           <address className="footer-address">
@@ -27,7 +28,7 @@ export default function Footer() {
             <p>Събота: 11:00 - 18:00 ч.</p>
             <p>Телефон: +359 88 471 3115</p>
           </address>
-          
+
           <div className="footer-socials">
             <a href="#" target="_blank" rel="noopener noreferrer">FB</a>
             <a href="#" target="_blank" rel="noopener noreferrer">IG</a>

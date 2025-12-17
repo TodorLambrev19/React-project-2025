@@ -21,25 +21,25 @@ export default function Register() {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <h2>Join the Club</h2>
-        
+        <h2>REGISTER</h2>
+
         <form onSubmit={handleSubmit}>
-          <input 
-            type="email" 
-            placeholder="Email Address" 
+          <input
+            type="email"
+            placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          
-          <input 
-            type="password" 
-            placeholder="Choose Password" 
+
+          <input
+            type="password"
+            placeholder="Choose Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          
+
           <button type="submit" className="auth-btn">
             Register
           </button>

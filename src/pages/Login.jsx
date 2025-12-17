@@ -22,24 +22,24 @@ export default function Login() {
     <div className="auth-wrapper">
       <div className="auth-card">
         <h2>Sign In</h2>
-        
+
         <form onSubmit={handleSubmit}>
-          <input 
-            type="email" 
-            placeholder="Email Address" 
+          <input
+            type="email"
+            placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          
-          <input 
-            type="password" 
-            placeholder="Password" 
+
+          <input
+            type="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          
+
           <button type="submit" className="auth-btn">
             Login
           </button>
