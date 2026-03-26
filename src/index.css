@@ -20,6 +20,7 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 #root,
@@ -38,9 +39,7 @@ body {
   padding: 2rem;
 }
 
-nav,
-header,
-.logo {
+nav, header, .logo {
   background-color: transparent !important;
 }
 
@@ -54,6 +53,7 @@ a:hover {
   color: var(--accent-color);
 }
 
+/* ─── FORMS ─── */
 .form-container {
   max-width: 500px;
   margin: 4rem auto;
@@ -64,9 +64,7 @@ a:hover {
   text-align: center;
 }
 
-input,
-textarea,
-select {
+input, textarea, select {
   width: 100%;
   padding: 12px 15px;
   margin: 10px 0;
@@ -79,9 +77,7 @@ select {
   transition: border-color 0.3s;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
+input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--accent-color);
 }
@@ -106,11 +102,13 @@ button:hover {
   opacity: 0.9;
 }
 
+/* ─── AUTH ─── */
 .auth-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 60vh;
+  padding: 1rem;
 }
 
 .auth-card {
@@ -143,6 +141,7 @@ button:hover {
   font-weight: bold;
 }
 
+/* ─── PRODUCTS GRID ─── */
 .home-container {
   padding: 2rem 0;
   width: 100%;
@@ -234,10 +233,11 @@ button:hover {
   color: black !important;
 }
 
+/* ─── FOOTER ─── */
 .site-footer {
   background-color: transparent;
   padding: 4rem 0 2rem;
-  margin-top: auto;
+  margin-top: 0;
   border-top: 1px solid #1a1a1a;
   width: 100%;
   display: flex;
@@ -340,6 +340,7 @@ button:hover {
   letter-spacing: 1px;
 }
 
+/* ─── HERO ─── */
 .hero-wrapper {
   width: 100vw;
   position: relative;
@@ -355,14 +356,15 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 3rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid #222;
   z-index: 1;
 }
 
 .hero-overlay {
   text-align: center;
   padding: 2rem;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
 }
 
 .hero-title {
@@ -394,6 +396,7 @@ button:hover {
   display: block;
 }
 
+/* ─── PREMIUM GRID ─── */
 .premium-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -444,7 +447,7 @@ button:hover {
   left: 0;
   width: 100%;
   padding: 10px;
-  background: rgba(230, 57, 70, 0.9);
+  background: rgba(230,57,70,0.9);
   color: white;
   text-align: center;
   font-weight: bold;
@@ -478,10 +481,11 @@ button:hover {
   font-size: 0.95rem;
 }
 
+/* ─── STATIC SECTION ─── */
 .static-section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 2px;
   width: 100vw;
   position: relative;
   left: 50%;
@@ -489,23 +493,24 @@ button:hover {
   margin-left: -50vw;
   margin-right: -50vw;
   box-sizing: border-box;
-  padding: 0 40px;
-  margin-top: 2rem;
-  margin-bottom: 5rem;
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 0;
+  
+}
+
+.static-card-wrapper {
+  position: relative;
+  height: 580px;
 }
 
 .static-card {
+  display: block;
   width: 100%;
-  height: 450px;
+  height: 100%;
   position: relative;
   overflow: hidden;
-  border: 1px solid #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.3s ease;
-}
-
-.static-card:hover {
-  border-color: #333;
 }
 
 .static-image {
@@ -513,55 +518,376 @@ button:hover {
   height: 100%;
   object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: block;
 }
 
 .static-card:hover .static-image {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 
 .static-card .overlay {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.92) 0%,
+    rgba(0,0,0,0.3) 40%,
+    transparent 70%
+  );
   z-index: 1;
 }
 
 .static-content {
   position: absolute;
-  bottom: 30px;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  padding: 0 15px;
-  text-align: center;
+  right: 0;
   z-index: 2;
-  transition: transform 0.3s ease;
+  padding: 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.static-card:hover .static-content {
-  transform: translateY(-10px);
+.static-info {
+  flex: 1;
+  min-width: 0;
 }
 
-.static-content h3 {
+.static-name {
   color: white;
-  font-size: 1.6rem;
-  font-weight: 900;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 8px;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
 }
 
 .static-price {
-  color: #e63946;
-  font-size: 1.1rem;
-  font-weight: bold;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.8rem;
+  font-weight: 400;
   letter-spacing: 1px;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 1);
 }
 
-.static-card {
-  height: 550px;
+.static-cart-btn {
+  flex-shrink: 0;
+  width: auto;
+  padding: 0 14px;
+  height: 36px;
+  background: #e63946;
+  border: none;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.static-cart-btn:hover {
+  background: white;
+  color: #e63946;
+}
+
+/* ─── HEADER MOBILE MENU ─── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 200;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.nav-hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 90px;
+  left: 0;
+  right: 0;
+  background: #000;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  z-index: 150;
+  padding: 1rem 0;
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-menu a,
+.mobile-menu button,
+.mobile-menu span.mobile-email {
+  width: 100%;
+  text-align: center;
+  padding: 14px 20px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid #111;
+  display: block;
+  background: transparent;
+  border-radius: 0;
+  margin: 0;
+}
+
+.mobile-menu button {
+  background: var(--accent-color);
+  border: none;
+  width: calc(100% - 40px);
+  margin: 10px 20px 0;
+  border-radius: 2px;
+  border-bottom: none;
+}
+
+.mobile-menu span.mobile-email {
+  color: #666;
+  font-size: 0.8rem;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: normal;
+}
+
+/* ════════════════════════════════════════
+   MEDIA QUERIES
+════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .static-section {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    padding: 0;
+  }
+
+  .static-card-wrapper {
+    height: 440px;
+  }
+
+  .footer-content {
+    padding: 0 30px;
+    gap: 2rem;
+  }
+
+  .footer-section {
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .nav-hamburger {
+    display: flex;
+  }
+
+  .hero-wrapper {
+    height: 380px;
+    margin-top: -1rem;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+
+  .static-section {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .static-card-wrapper {
+    height: 420px;
+  }
+
+  .static-name {
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+  }
+
+  .static-price {
+    font-size: 0.72rem;
+  }
+
+  .static-cart-btn {
+    padding: 0 10px;
+    height: 32px;
+    font-size: 0.65rem;
+  }
+
+  .static-content {
+    padding: 12px;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .image-container {
+    height: 220px;
+  }
+
+  .card-info {
+    padding: 1rem;
+  }
+
+  .card-info h3 {
+    font-size: 0.85rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .form-container {
+    margin: 2rem 1rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .details-layout {
+    flex-direction: column !important;
+    gap: 2rem !important;
+    margin: 1.5rem 1rem !important;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    padding: 0 20px;
+    gap: 2rem;
+  }
+
+  .footer-section {
+    min-width: unset;
+  }
+
+  .footer-left {
+    flex: unset;
+  }
+
+  .footer-logo-img {
+    max-width: 150px;
+  }
+
+  .site-footer {
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .footer-bottom {
+    margin-top: 2rem;
+    padding: 0 20px;
+    padding-top: 1rem;
+  }
+
+  .about-hero-title {
+    font-size: 2.5rem !important;
+    letter-spacing: 4px !important;
+  }
+
+  .auth-card {
+    padding: 2rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .static-section {
+    grid-template-columns: 1fr;
+    gap: 2px;
+    margin-bottom: 0;
+  }
+
+  .static-card-wrapper {
+    height: 380px;
+  }
+
+  .static-content {
+    padding: 10px;
+  }
+
+  .static-name {
+    font-size: 0.58rem;
+  }
+
+  .static-cart-btn {
+    padding: 0 10px;
+    height: 30px;
+    font-size: 0.62rem;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .hero-wrapper {
+    height: 300px;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  .about-hero-title {
+    font-size: 1.8rem !important;
+    letter-spacing: 3px !important;
+  }
 }
