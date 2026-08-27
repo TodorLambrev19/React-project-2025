@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
+    <footer id="contact" className="site-footer" style={{ scrollMarginTop: '90px' }}>
       <div className="footer-content">
         <div className="footer-section footer-left">
           <div className="footer-logo">

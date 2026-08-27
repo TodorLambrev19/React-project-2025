@@ -1,54 +1,49 @@
 import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useAdminSession } from '../hooks/useAdminSession';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { login } = useAuth();
-  const navigate = useNavigate();
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const { login } = useAdminSession();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await login(email, password);
-      navigate('/');
-    } catch (error) {
-      alert("Failed to log in: " + error.message);
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+        try {
+            await login(password);
+            navigate('/orders');
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <div className="auth-wrapper">
-      <div className="auth-card">
-        <h2>Sign In</h2>
+    return (
+        <div className="auth-wrapper">
+            <div className="auth-card">
+                <h2>Admin Login</h2>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+                {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
 
-          <button type="submit" className="auth-btn">
-            Login
-          </button>
-        </form>
-
-        <Link to="/register" className="auth-link">
-          Don't have an account? <span>Register</span>
-        </Link>
-      </div>
-    </div>
-  );
+                    <button type="submit" className="auth-btn" disabled={loading}>
+                        {loading ? 'Logging in...' : 'Login'}
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
 }

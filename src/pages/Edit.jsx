@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { getProductById, updateProduct } from '../api/products';
 
 export default function Edit() {
     const { id } = useParams();
@@ -20,17 +19,12 @@ export default function Edit() {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const docRef = doc(db, "products", id);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    setFormData(docSnap.data());
-                } else {
-                    alert("Продуктът не съществува!");
-                    navigate('/');
-                }
+                const product = await getProductById(id);
+                setFormData({ ...product, imagesText: (product.images || []).join('\n') });
             } catch (error) {
                 console.error("Error fetching product:", error);
+                alert("Продуктът не съществува!");
+                navigate('/');
             } finally {
                 setLoading(false);
             }
@@ -40,9 +34,10 @@ export default function Edit() {
     }, [id, navigate]);
 
     const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: type === 'checkbox' ? checked : value
         });
     };
 
@@ -51,13 +46,15 @@ export default function Edit() {
         setUpdating(true);
 
         try {
-            const docRef = doc(db, "products", id);
-            await updateDoc(docRef, {
+            await updateProduct(id, {
                 title: formData.title,
                 category: formData.category,
                 imageUrl: formData.imageUrl,
                 price: Number(formData.price),
-                description: formData.description
+                description: formData.description,
+                soldOut: formData.soldOut,
+                preOrder: formData.preOrder,
+                images: (formData.imagesText || '').split('\n').map(s => s.trim()).filter(Boolean),
             });
             navigate(`/details/${id}`);
         } catch (err) {
@@ -138,6 +135,39 @@ export default function Edit() {
                         rows="3"
                     ></textarea>
                 </div>
+                <div className="form-group">
+                    <textarea
+                        name="imagesText"
+                        placeholder="Additional image URLs, one per line (Optional, e.g. /images/back.png)"
+                        value={formData.imagesText || ''}
+                        onChange={handleChange}
+                        rows="3"
+                    ></textarea>
+                </div>
+                <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white' }}>
+                    <input
+                        type="checkbox"
+                        id="soldOut"
+                        name="soldOut"
+                        checked={!!formData.soldOut}
+                        onChange={handleChange}
+                        style={{ width: 'auto' }}
+                    />
+                    <label htmlFor="soldOut" style={{ cursor: 'pointer' }}>Mark as sold out</label>
+                </div>
+
+                <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white' }}>
+                    <input
+                        type="checkbox"
+                        id="preOrder"
+                        name="preOrder"
+                        checked={!!formData.preOrder}
+                        onChange={handleChange}
+                        style={{ width: 'auto' }}
+                    />
+                    <label htmlFor="preOrder" style={{ cursor: 'pointer' }}>Mark as pre-order (hero button links here)</label>
+                </div>
+
                 <button type="submit" className="submit-btn" disabled={updating}>
                     {updating ? 'SAVING...' : 'SAVE CHANGES'}
                 </button>

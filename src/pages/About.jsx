@@ -16,7 +16,7 @@ export default function About() {
                 right: '50%',
                 marginLeft: '-50vw',
                 marginRight: '-50vw',
-                marginTop: '-31px',
+                marginTop: 'calc(-31px - 90px)',
                 height: '60vh',
                 backgroundImage: 'url("/images/hero-banner2.jpg")',
                 backgroundSize: 'cover',

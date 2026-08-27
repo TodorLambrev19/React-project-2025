@@ -1,7 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 
 export default function CartDrawer({ isOpen, onClose }) {
   const { cartItems, removeFromCart, updateQuantity, totalPrice } = useCart();
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    onClose();
+    navigate('/checkout');
+  };
 
   return (
     <>
@@ -37,14 +44,16 @@ export default function CartDrawer({ isOpen, onClose }) {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          gap: '12px',
         }}>
-          <h2 style={{ fontSize: '1rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: 'white' }}>
+          <h2 style={{ fontSize: '0.9rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: 'white', whiteSpace: 'nowrap' }}>
             Your Cart ({cartItems.length})
           </h2>
           <button onClick={onClose} style={{
             background: 'none', border: 'none',
             color: '#666', fontSize: '1.5rem',
             cursor: 'pointer', lineHeight: 1,
+            flexShrink: 0, width: 'auto', marginTop: 0,
           }}>×</button>
         </div>
 
@@ -56,7 +65,7 @@ export default function CartDrawer({ isOpen, onClose }) {
             </div>
           ) : (
             cartItems.map(item => (
-              <div key={item.id} style={{
+              <div key={`${item.id}-${item.size || ''}`} style={{
                 display: 'flex', gap: '16px',
                 padding: '16px 0',
                 borderBottom: '1px solid #1a1a1a',
@@ -70,12 +79,17 @@ export default function CartDrawer({ isOpen, onClose }) {
                   <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'white', marginBottom: '4px', textTransform: 'uppercase' }}>
                     {item.title}
                   </p>
+                  {item.size && (
+                    <p style={{ fontSize: '0.75rem', color: '#888', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                      Size: {item.size}
+                    </p>
+                  )}
                   <p style={{ fontSize: '0.9rem', color: '#e63946', fontWeight: 700, marginBottom: '10px' }}>
                     ${item.price}
                   </p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)}
                       style={{
                         width: 28, height: 28,
                         background: '#1a1a1a',
@@ -87,7 +101,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                       {item.quantity}
                     </span>
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)}
                       style={{
                         width: 28, height: 28,
                         background: '#1a1a1a',
@@ -96,7 +110,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                         borderRadius: '2px', fontSize: '1rem',
                       }}>+</button>
                     <button
-                      onClick={() => removeFromCart(item.id)}
+                      onClick={() => removeFromCart(item.id, item.size)}
                       style={{
                         marginLeft: 'auto',
                         background: 'none', border: 'none',
@@ -122,14 +136,17 @@ export default function CartDrawer({ isOpen, onClose }) {
                 ${totalPrice.toFixed(2)}
               </span>
             </div>
-            <button style={{
-              width: '100%', padding: '16px',
-              background: '#e63946', border: 'none',
-              color: 'white', fontWeight: 700,
-              fontSize: '0.9rem', letterSpacing: '2px',
-              textTransform: 'uppercase', cursor: 'pointer',
-              borderRadius: '2px',
-            }}>
+            <button
+              onClick={handleCheckout}
+              style={{
+                width: '100%', padding: '16px',
+                background: '#e63946', border: 'none',
+                color: 'white', fontWeight: 700,
+                fontSize: '0.9rem', letterSpacing: '2px',
+                textTransform: 'uppercase', cursor: 'pointer',
+                borderRadius: '2px', marginTop: 0,
+              }}
+            >
               CHECKOUT
             </button>
           </div>

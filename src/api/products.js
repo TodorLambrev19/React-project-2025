@@ -1,44 +1,38 @@
-import { db } from '../firebase';
-import {
-    collection,
-    addDoc,
-    getDocs,
-    doc,
-    getDoc,
-    deleteDoc,
-    updateDoc
-} from 'firebase/firestore';
+import { API_BASE } from './base';
 
-const collectionName = 'products';
+async function request(path, options) {
+    const res = await fetch(API_BASE + path, { credentials: 'include', ...options });
+    if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `Request failed: ${res.status}`);
+    }
+    return res.json();
+}
 
 export async function createProduct(productData) {
-    await addDoc(collection(db, collectionName), productData);
+    return request('/api/admin/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(productData),
+    });
 }
 
 export async function getAllProducts() {
-    const querySnapshot = await getDocs(collection(db, collectionName));
-    return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-    }));
+    return request('/api/products');
 }
 
 export async function getProductById(id) {
-    const docRef = doc(db, collectionName, id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        return { id: docSnap.id, ...docSnap.data() };
-    } else {
-        throw new Error("Product not found");
-    }
+    return request(`/api/products/${id}`);
 }
 
 export async function deleteProduct(id) {
-    const docRef = doc(db, collectionName, id);
-    await deleteDoc(docRef);
+    return request(`/api/admin/products/${id}`, { method: 'DELETE' });
 }
 
 export async function updateProduct(id, productData) {
-    const docRef = doc(db, collectionName, id);
-    await updateDoc(docRef, productData);
+    return request(`/api/admin/products/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(productData),
+    });
 }

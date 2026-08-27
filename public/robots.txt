@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /checkout
+Disallow: /orders
+Disallow: /login
+Disallow: /create
+Disallow: /edit/
+Disallow: /admin
+
+Sitemap: https://vrag.shop/sitemap.xml

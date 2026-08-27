@@ -1,0 +1,33 @@
+name = "vrag-clothing-api"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+workers_dev = true
+
+[[routes]]
+pattern = "vrag.shop/api/*"
+zone_name = "vrag.shop"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vrag-clothing-db"
+database_id = "18fd4985-ff30-49b7-94a2-229e0a9f6c32"
+
+[vars]
+ALLOWED_ORIGINS = "http://localhost:5173,https://vrag-clothing.pages.dev,https://vrag.shop,https://www.vrag.shop"
+
+# SESSION_SECRET and ADMIN_PASSWORD are set as Worker secrets via
+# `wrangler secret put`, not here — never commit real secrets to this file.
+
+# Local-only environment (`wrangler dev --env dev`) with throwaway
+# credentials for testing the login flow. Never used by `wrangler deploy`.
+[env.dev]
+
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "vrag-clothing-db"
+database_id = "18fd4985-ff30-49b7-94a2-229e0a9f6c32"
+
+[env.dev.vars]
+ALLOWED_ORIGINS = "http://localhost:5173,https://vrag-clothing.pages.dev,https://vrag.shop,https://www.vrag.shop"
+ADMIN_PASSWORD = "dev-local-only"
+SESSION_SECRET = "dev-local-only-session-secret"
